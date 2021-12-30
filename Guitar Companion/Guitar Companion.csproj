@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <RootNamespace>Guitar_Companion</RootNamespace>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Data\close.png" />
+    <None Remove="Data\fullscreen.png" />
+    <None Remove="Data\minimize.png" />
+    <None Remove="Fonts\Montserrat-Black.ttf" />
+    <None Remove="Fonts\Montserrat-Light.ttf" />
+    <None Remove="Fonts\Montserrat-Regular.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Data.SQLite" Version="1.0.115.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Data\close.png" />
+    <Resource Include="Data\fullscreen.png" />
+    <Resource Include="Data\minimize.png" />
+    <Resource Include="Fonts\Montserrat-Black.ttf" />
+    <Resource Include="Fonts\Montserrat-Light.ttf" />
+    <Resource Include="Fonts\Montserrat-Regular.ttf" />
+  </ItemGroup>
+
+</Project>
