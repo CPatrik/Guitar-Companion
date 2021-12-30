@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         MinHeight="500"
         MouseDown="Window_MouseDown"
-        MinWidth="935" WindowStartupLocation="CenterOwner"  IsVisibleChanged="Window_IsVisibleChanged" FontFamily="{StaticResource Montserrat Regular}" WindowStyle="None" >
+        MinWidth="935" Width="935" Height="500" WindowStartupLocation="CenterOwner"  IsVisibleChanged="Window_IsVisibleChanged" FontFamily="{StaticResource Montserrat Regular}" WindowStyle="None" >
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="607*"/>
