@@ -5,24 +5,25 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Guitar_Companion.Windows"
         mc:Ignorable="d"
+        Background="MintCream"
         Title="Add Songs" Height="250" Width="311" ResizeMode="NoResize" ShowInTaskbar="False" WindowStartupLocation="CenterScreen">
+    
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
+            <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <TextBlock x:Name="songNameTextBlock" Margin="10,10,11,93" TextWrapping="Wrap" Text="Song name" TextAlignment="Center" FontFamily="{StaticResource Montserrat Regular}" FontSize="14"/>
+        <TextBlock x:Name="songNameTextBlock" Margin="10,10,11,93" TextWrapping="Wrap" Text="Song name" TextAlignment="Center" FontFamily="{StaticResource Montserrat Regular}" FontSize="14" />
         <ComboBox x:Name="tuningComboBox" SelectionChanged="tuningComboBox_SelectionChanged" Margin="85,59,0,0" HorizontalAlignment="Left" Width="172" Height="23" VerticalAlignment="Top" FontFamily="{StaticResource Montserrat Regular}" FontSize="14">
-            <ComboBoxItem Content="Standard (EADGBE)" IsSelected="True"/>
-            <ComboBoxItem Content="DADGBE"/>
-            <ComboBoxItem Content="FADGBE"/>
-            <ComboBoxItem Content="Custom"/>
+            <ComboBoxItem Content="Standard (EADGBE)" IsSelected="True" />
+            <ComboBoxItem Content="DADGBE" />
+            <ComboBoxItem Content="FADGBE" />
+            <ComboBoxItem Content="Custom" />
         </ComboBox>
-        <Label Content="Tuning:" Margin="0,55,0,0" HorizontalAlignment="Left" Width="74" Height="39" VerticalAlignment="Top" FontFamily="{StaticResource Montserrat Regular}" FontSize="14"/>
-        <Button x:Name="addButton" Click="addButton_Click" Content="Add" Margin="35,94,0,0" HorizontalAlignment="Left" Width="59" Height="22" VerticalAlignment="Top" FontFamily="{StaticResource Montserrat Regular}" FontSize="14"/>
-        <CheckBox x:Name="originalFilesCheckBox" IsChecked="True" Content="Keep original files" Margin="0,148,0,0" HorizontalAlignment="Left" Width="148" Height="28" VerticalAlignment="Top" FontFamily="{StaticResource Montserrat Regular}" FontSize="14"/>
-        <TextBox x:Name="customTextBox" Visibility="Hidden" HorizontalAlignment="Left" Margin="127,98,0,0" TextWrapping="Wrap" Text="Custom Tuning" VerticalAlignment="Top" Width="120" FontFamily="{StaticResource Montserrat Regular}" FontSize="14"/>
-        <Button x:Name="skipButton" Content="Skip" Click="skipButton_Click" HorizontalAlignment="Left" Margin="35,121,0,0" VerticalAlignment="Top" Width="59" Height="22" FontFamily="{StaticResource Montserrat Regular}" FontSize="14"/>
-        <Button x:Name="openOriginalButton" Click="openOriginalButton_Click" Content="Open original" HorizontalAlignment="Left" Margin="15,176,0,0" VerticalAlignment="Top" FontFamily="{StaticResource Montserrat Regular}" FontSize="14" Width="107"/>
-
+        <Label Content="Tuning:" Margin="0,55,0,0" HorizontalAlignment="Left" Width="74" Height="39" VerticalAlignment="Top" FontFamily="{StaticResource Montserrat Regular}" FontSize="14" />
+        <Button x:Name="addButton" Click="addButton_Click" Content="Add" Margin="35,94,0,0" HorizontalAlignment="Left" Width="59" Height="22" VerticalAlignment="Top" FontFamily="{StaticResource Montserrat Regular}" FontSize="14" />
+        <CheckBox x:Name="originalFilesCheckBox" IsChecked="True" Content="Keep original files" Margin="0,148,0,0" HorizontalAlignment="Left" Width="148" Height="28" VerticalAlignment="Top" FontFamily="{StaticResource Montserrat Regular}" FontSize="14" />
+        <TextBox x:Name="customTextBox" Visibility="Hidden" HorizontalAlignment="Left" Margin="127,98,0,0" TextWrapping="Wrap" Text="Custom Tuning" VerticalAlignment="Top" Width="120" FontFamily="{StaticResource Montserrat Regular}" FontSize="14" />
+        <Button x:Name="skipButton" Content="Skip" Click="skipButton_Click" HorizontalAlignment="Left" Margin="35,121,0,0" VerticalAlignment="Top" Width="59" Height="22" FontFamily="{StaticResource Montserrat Regular}" FontSize="14" />
+        <Button x:Name="openOriginalButton" Click="openOriginalButton_Click" Content="Open original" HorizontalAlignment="Left" Margin="15,176,0,0" VerticalAlignment="Top" FontFamily="{StaticResource Montserrat Regular}" FontSize="14" Width="107" />
     </Grid>
 </Window>

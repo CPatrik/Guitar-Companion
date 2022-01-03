@@ -1,20 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.SQLite;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace Database
 {
     public class DbCreator
     {
-        SQLiteConnection dbConnection;
-        SQLiteCommand command;
-        string sqlCommand;
+        private SQLiteConnection dbConnection;
+        private SQLiteCommand command;
+        private string sqlCommand;
 
         public string createDbConnection()
         {
@@ -32,7 +26,6 @@ namespace Database
                 sqlCommand = "CREATE TABLE songs(name varchar(70), tuning varchar(12), learning bool, learned bool, favorite bool,primary key(name))";
                 executeQuery(sqlCommand);
             }
-
         }
 
         public bool checkIfExist(string tableName)
@@ -53,9 +46,8 @@ namespace Database
             }
             catch (Exception)
             {
-                MessageBox.Show("Tab with the same name is already added!","",MessageBoxButton.OK,MessageBoxImage.Error);
+                MessageBox.Show("Tab with the same name is already added!", "", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            
         }
 
         public bool checkIfTableContainsData(string tableName)

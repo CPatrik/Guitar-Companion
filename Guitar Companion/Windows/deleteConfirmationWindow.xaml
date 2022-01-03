@@ -5,12 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Guitar_Companion.Windows"
         mc:Ignorable="d"
-        Title="deleteConfirmationWindow" Height="350" Width="500" ResizeMode="NoResize">
+        Background="MintCream"
+        Title="Confirmation" Height="350" Width="500" ResizeMode="NoResize" ShowInTaskbar="False" WindowStartupLocation="CenterScreen" WindowStyle="ToolWindow">
     <Grid Margin="0,0,0,-6">
-        <TextBlock HorizontalAlignment="Left" Margin="87,10,0,0" TextWrapping="Wrap" Text="Are you sure you want to delete these items?" TextAlignment="Center" VerticalAlignment="Top" Width="326"/>
-        <TextBlock x:Name="itemsTextBlock" TextAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" Text="" Width="454" Margin="0,51,0,92"/>
-        <Button x:Name="confirmButton" Click="confirmButton_Click" Content="Confirm" Margin="99,0,313,36" Height="30" VerticalAlignment="Bottom"/>
-        <Button x:Name="cancelButton" Click="cancelButton_Click" Content="Cancel" Margin="0,0,98,36" HorizontalAlignment="Right" Width="88" Height="25" VerticalAlignment="Bottom"/>
-
+        <TextBlock HorizontalAlignment="Left" Margin="87,10,0,0" TextWrapping="Wrap" Text="Are you sure you want to delete these items?" TextAlignment="Center" VerticalAlignment="Top" Width="326" />
+        <TextBlock x:Name="itemsTextBlock" TextAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" Text="" Width="454" Margin="0,51,0,92" />
+        <Button x:Name="confirmButton" Click="confirmButton_Click" Content="Confirm" Margin="99,0,313,36" Height="30" VerticalAlignment="Bottom" />
+        <Button x:Name="cancelButton" Click="cancelButton_Click" Content="Cancel" Margin="0,0,98,36" HorizontalAlignment="Right" Width="88" Height="25" VerticalAlignment="Bottom" />
     </Grid>
 </Window>

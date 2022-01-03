@@ -1,22 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data;
+using System.Data.SQLite;
+using System.Diagnostics;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Data.SQLite;
-using System.IO;
-using System.Data;
-using System.Diagnostics;
-using Path = System.IO.Path;
 
 namespace Guitar_Companion
 {
@@ -26,6 +16,7 @@ namespace Guitar_Companion
     public partial class MainWindow : Window
     {
         public static List<string> deleteSongs = new List<string>();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -97,8 +88,7 @@ namespace Guitar_Companion
             }
             catch (Exception e)
             {
-
-                Console.WriteLine("Error with checkboxes: "+ e.Message);
+                Console.WriteLine("Error with checkboxes: " + e.Message);
             }
 
             return command;
@@ -112,6 +102,7 @@ namespace Guitar_Companion
             addSongsWindow.Show();
             this.Show();
         }
+
         public void DataBaseConnection(string query)
         {
             try
@@ -125,7 +116,7 @@ namespace Guitar_Companion
                 SQLiteDataAdapter sda = new SQLiteDataAdapter(sqlcmd);
                 DataTable dt = new DataTable("Songs");
                 sda.Fill(dt);
-                
+
                 tabsDataGrid.ItemsSource = dt.DefaultView;
                 sqlite.Close();
 
@@ -135,7 +126,6 @@ namespace Guitar_Companion
             {
                 Console.WriteLine("SQLite DataBase Error!");
             }
-
         }
 
         private void openButton_Click(object sender, RoutedEventArgs e)
@@ -184,7 +174,6 @@ namespace Guitar_Companion
             {
                 MessageBox.Show("Error while loading the tab!");
             }
-            
         }
 
         private void deleteButton_Click(object sender, RoutedEventArgs e)
@@ -288,11 +277,8 @@ namespace Guitar_Companion
             }
             catch (Exception)
             {
-
                 MessageBox.Show("Tab not selected!");
             }
-            
-            
         }
 
         private void learningToggle_Click(object sender, RoutedEventArgs e)
@@ -301,21 +287,21 @@ namespace Guitar_Companion
             {
                 if (!(tabsDataGrid.SelectedItems.Count > 1))
                 {
-                        string name;
-                        bool learning;
-                        DataRowView dataRowView = (DataRowView)tabsDataGrid.SelectedItem;
-                        name = dataRowView.Row[0].ToString();
-                        learning = (bool)dataRowView.Row[2];
-                        if (learning)
-                        {
-                            DataBaseConnection($"update songs set learning=false where name=\"{name}\"");
-                            DataBaseConnection("SELECT * FROM songs");
-                        }
-                        else
-                        {
-                            DataBaseConnection($"update songs set learning=true where name=\"{name}\"");
-                            DataBaseConnection("SELECT * FROM songs");
-                        }
+                    string name;
+                    bool learning;
+                    DataRowView dataRowView = (DataRowView)tabsDataGrid.SelectedItem;
+                    name = dataRowView.Row[0].ToString();
+                    learning = (bool)dataRowView.Row[2];
+                    if (learning)
+                    {
+                        DataBaseConnection($"update songs set learning=false where name=\"{name}\"");
+                        DataBaseConnection("SELECT * FROM songs");
+                    }
+                    else
+                    {
+                        DataBaseConnection($"update songs set learning=true where name=\"{name}\"");
+                        DataBaseConnection("SELECT * FROM songs");
+                    }
                 }
                 else
                 {
@@ -326,7 +312,6 @@ namespace Guitar_Companion
             {
                 MessageBox.Show("Tab not selected!");
             }
-            
         }
 
         private void learnedToggle_Click(object sender, RoutedEventArgs e)
@@ -358,10 +343,8 @@ namespace Guitar_Companion
             }
             catch (Exception)
             {
-
                 MessageBox.Show("Tab not selected!");
             }
-            
         }
 
         private void sortButton_Click(object sender, RoutedEventArgs e)
@@ -372,25 +355,19 @@ namespace Guitar_Companion
             }
             catch (Exception)
             {
-
                 MessageBox.Show("Invalid sql query");
             }
         }
 
-        
-
         private void tuningComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             DataBaseConnection(GetTable());
-
-
-
         }
 
         private void openRandomTab_Click(object sender, RoutedEventArgs e)
         {
             Random rnd = new Random();
-            tabsDataGrid.SelectedIndex = rnd.Next(0,tabsDataGrid.Items.Count);
+            tabsDataGrid.SelectedIndex = rnd.Next(0, tabsDataGrid.Items.Count);
             OpenTabs();
             tabsDataGrid.Focus();
         }
@@ -409,10 +386,8 @@ namespace Guitar_Companion
             }
             catch (Exception)
             {
-
                 Console.WriteLine("Error moving the window");
             }
-
         }
 
         private void exitButton_Click(object sender, RoutedEventArgs e)
@@ -428,7 +403,7 @@ namespace Guitar_Companion
             }
             else
             {
-                this.WindowState=WindowState.Normal;
+                this.WindowState = WindowState.Normal;
             }
         }
 

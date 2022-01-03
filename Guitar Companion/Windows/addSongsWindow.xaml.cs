@@ -1,20 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Diagnostics;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using System.IO;
-using System.Data.SQLite;
-using System.Data;
-using System.Diagnostics;
 
 namespace Guitar_Companion.Windows
 {
@@ -23,8 +11,8 @@ namespace Guitar_Companion.Windows
     /// </summary>
     public partial class addSongsWindow : Window
     {
-         Microsoft.Win32.OpenFileDialog fileDialog = new Microsoft.Win32.OpenFileDialog();
-         int index = 0;
+        private Microsoft.Win32.OpenFileDialog fileDialog = new Microsoft.Win32.OpenFileDialog();
+        private int index = 0;
 
         public addSongsWindow()
         {
@@ -102,7 +90,7 @@ namespace Guitar_Companion.Windows
 
         private void FillNextSong()
         {
-            if (index<fileDialog.FileNames.Length)
+            if (index < fileDialog.FileNames.Length)
             {
                 songNameTextBlock.Text = fileDialog.FileNames[index];
             }
@@ -144,11 +132,9 @@ namespace Guitar_Companion.Windows
                         UseShellExecute = true
                     }
                 }.Start();
-
             }
             catch (Exception)
             {
-
                 MessageBox.Show("Error opening the original tab!");
             }
         }
