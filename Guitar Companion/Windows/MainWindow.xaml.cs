@@ -29,6 +29,7 @@ namespace Guitar_Companion
         public MainWindow()
         {
             InitializeComponent();
+            //Create database
             if (!File.Exists("songs.sqlite"))
             {
                 SQLiteConnection.CreateFile("songs.sqlite");
@@ -41,11 +42,71 @@ namespace Guitar_Companion
                 Directory.CreateDirectory("Tabs");
             }
 
+            //Fill datagrid
             DataBaseConnection("SELECT * FROM songs");
+        }
+
+        private string GetTable()
+        //Get the table for the sql query
+        {
+            string command;
+            if (tuningComboBox.SelectedIndex == 0)
+            {
+                command = "SELECT * from songs where name IS NOT NULL";
+            }
+            else if (tuningComboBox.SelectedIndex == 4)
+            {
+                command = "SELECT * FROM songs where name IS NOT NULL AND tuning!=\"EADGBE\" AND tuning!=\"DADGBE\" AND tuning!=\"FADGBE\"";
+            }
+            else
+            {
+                string tuning;
+                if (tuningComboBox.SelectedIndex == 1)
+                {
+                    tuning = "EADGBE";
+                }
+                else if (tuningComboBox.SelectedIndex == 2)
+                {
+                    tuning = "DADGBE";
+                }
+                else
+                {
+                    tuning = "FADGBE";
+                }
+                command = $"SELECT * FROM songs where name IS NOT NULL AND tuning=\"{tuning}\"";
+            }
+
+            try
+            {
+                bool isFavorite = FavoritCheckBox.IsChecked.Value;
+                bool isLearning = learningCheckBox.IsChecked.Value;
+                bool isLearned = learnedCheckBox.IsChecked.Value;
+
+                if (isFavorite)
+                {
+                    command += " AND favorite=true";
+                }
+                if (isLearning)
+                {
+                    command += " AND learning=true";
+                }
+                if (isLearned)
+                {
+                    command += " AND learned=true";
+                }
+            }
+            catch (Exception e)
+            {
+
+                Console.WriteLine("Error with checkboxes: "+ e.Message);
+            }
+
+            return command;
         }
 
         private void addTabsButton_Click(object sender, RoutedEventArgs e)
         {
+            //Open addTabs window
             Windows.addSongsWindow addSongsWindow = new Windows.addSongsWindow();
             this.Show();
             addSongsWindow.Show();
@@ -172,16 +233,11 @@ namespace Guitar_Companion
             searchTextBox.Text = "";
         }
 
-        private void Window_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            DataBaseConnection("SELECT * FROM songs");
-        }
-
         private void searchButton_Click(object sender, RoutedEventArgs e)
         {
             if (searchTextBox.Text != "")
             {
-                DataBaseConnection($"select * from songs where name like \'%{searchTextBox.Text}%\'");
+                DataBaseConnection($"{GetTable()} AND name like \'%{searchTextBox.Text}%\'");
             }
         }
 
@@ -310,88 +366,24 @@ namespace Guitar_Companion
 
         private void sortButton_Click(object sender, RoutedEventArgs e)
         {
-            bool isFavorite = FavoritCheckBox.IsChecked.Value;
-            bool isLearning = learningCheckBox.IsChecked.Value;
-            bool isLearned = learnedCheckBox.IsChecked.Value;
-
-            string command = "SELECT * from songs where name IS NOT NULL";
-
-            if (tuningComboBox.SelectedIndex == 0)
-            {
-                
-            }
-            else if (tuningComboBox.SelectedIndex == 4)
-            {
-                command+= " AND tuning!=\"EADGBE\" AND tuning!=\"DADGBE\" AND tuning!=\"FADGBE\"";
-            }
-            else
-            {
-                if (tuningComboBox.SelectedIndex == 1)
-                {
-                    command+= " AND tuning=\"EADGBE\"";
-                }
-                else if (tuningComboBox.SelectedIndex == 2)
-                {
-                    command += " AND tuning=\"DADGBE\"";
-                }
-                else
-                {
-                    command += " AND tuning=\"FADGBE\"";
-                }
-            }
-            if (isFavorite)
-            {
-                command += " AND favorite=true";
-            }
-            if (isLearning)
-            {
-                command += " AND learning=true";
-            }
-            if (isLearned)
-            {
-                command += " AND learned=true";
-            }
             try
             {
-                DataBaseConnection(command);
+                DataBaseConnection(GetTable());
             }
             catch (Exception)
             {
 
                 MessageBox.Show("Invalid sql query");
             }
-            
-
-
         }
+
+        
 
         private void tuningComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (tuningComboBox.SelectedIndex == 0)
-            {
-                DataBaseConnection("SELECT * FROM songs");
-            }
-            else if (tuningComboBox.SelectedIndex == 4)
-            {
-                DataBaseConnection("SELECT * FROM songs where tuning!=\"EADGBE\" AND tuning!=\"DADGBE\" AND tuning!=\"FADGBE\"");
-            }
-            else
-            {
-                string tuning;
-                if (tuningComboBox.SelectedIndex == 1)
-                {
-                    tuning = "EADGBE";
-                }
-                else if (tuningComboBox.SelectedIndex == 2)
-                {
-                    tuning = "DADGBE";
-                }
-                else
-                {
-                    tuning = "FADGBE";
-                }
-                DataBaseConnection($"SELECT * FROM songs where tuning=\"{tuning}\"");
-            }
+            DataBaseConnection(GetTable());
+
+
 
         }
 
@@ -405,7 +397,7 @@ namespace Guitar_Companion
 
         private void FillTabsLoaded(int count)
         {
-            tabsLoadedLabel.Text = (count-1) + " tabs loaded";
+            tabsLoadedLabel.Text = count + " tabs loaded";
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
@@ -443,6 +435,21 @@ namespace Guitar_Companion
         private void minimizeButton_Click(object sender, RoutedEventArgs e)
         {
             this.WindowState = WindowState.Minimized;
+        }
+
+        private void searchTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return)
+            {
+                if (searchTextBox.Text != "")
+                {
+                    DataBaseConnection($"{GetTable()} AND name like \'%{searchTextBox.Text}%\'");
+                }
+                else
+                {
+                    DataBaseConnection("SELECT * FROM songs");
+                }
+            }
         }
     }
 }

@@ -11,6 +11,7 @@
   <ItemGroup>
     <None Remove="Data\close.png" />
     <None Remove="Data\fullscreen.png" />
+    <None Remove="Data\guitar.png" />
     <None Remove="Data\minimize.png" />
     <None Remove="Fonts\Montserrat-Black.ttf" />
     <None Remove="Fonts\Montserrat-Light.ttf" />
@@ -24,6 +25,7 @@
   <ItemGroup>
     <Resource Include="Data\close.png" />
     <Resource Include="Data\fullscreen.png" />
+    <Resource Include="Data\guitar.png" />
     <Resource Include="Data\minimize.png" />
     <Resource Include="Fonts\Montserrat-Black.ttf" />
     <Resource Include="Fonts\Montserrat-Light.ttf" />
