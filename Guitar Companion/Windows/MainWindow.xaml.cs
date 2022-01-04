@@ -262,12 +262,26 @@ namespace Guitar_Companion
                     if (favorite)
                     {
                         DataBaseConnection($"update songs set favorite=false where name=\"{name}\"");
-                        DataBaseConnection("SELECT * FROM songs");
+                        if (searchTextBox.Text != "")
+                        {
+                            DataBaseConnection($"{GetTable()} AND name like \'%{searchTextBox.Text}%\'");
+                        }
+                        else
+                        {
+                            DataBaseConnection(GetTable());
+                        }
                     }
                     else
                     {
                         DataBaseConnection($"update songs set favorite=true where name=\"{name}\"");
-                        DataBaseConnection("SELECT * FROM songs");
+                        if (searchTextBox.Text != "")
+                        {
+                            DataBaseConnection($"{GetTable()} AND name like \'%{searchTextBox.Text}%\'");
+                        }
+                        else
+                        {
+                            DataBaseConnection(GetTable());
+                        }
                     }
                 }
                 else
@@ -295,12 +309,26 @@ namespace Guitar_Companion
                     if (learning)
                     {
                         DataBaseConnection($"update songs set learning=false where name=\"{name}\"");
-                        DataBaseConnection("SELECT * FROM songs");
+                        if (searchTextBox.Text != "")
+                        {
+                            DataBaseConnection($"{GetTable()} AND name like \'%{searchTextBox.Text}%\'");
+                        }
+                        else
+                        {
+                            DataBaseConnection(GetTable());
+                        }
                     }
                     else
                     {
                         DataBaseConnection($"update songs set learning=true where name=\"{name}\"");
-                        DataBaseConnection("SELECT * FROM songs");
+                        if (searchTextBox.Text != "")
+                        {
+                            DataBaseConnection($"{GetTable()} AND name like \'%{searchTextBox.Text}%\'");
+                        }
+                        else
+                        {
+                            DataBaseConnection(GetTable());
+                        }
                     }
                 }
                 else
@@ -328,12 +356,26 @@ namespace Guitar_Companion
                     if (learned)
                     {
                         DataBaseConnection($"update songs set learned=false where name=\"{name}\"");
-                        DataBaseConnection("SELECT * FROM songs");
+                        if (searchTextBox.Text != "")
+                        {
+                            DataBaseConnection($"{GetTable()} AND name like \'%{searchTextBox.Text}%\'");
+                        }
+                        else
+                        {
+                            DataBaseConnection(GetTable());
+                        }
                     }
                     else
                     {
                         DataBaseConnection($"update songs set learned=true where name=\"{name}\"");
-                        DataBaseConnection("SELECT * FROM songs");
+                        if (searchTextBox.Text != "")
+                        {
+                            DataBaseConnection($"{GetTable()} AND name like \'%{searchTextBox.Text}%\'");
+                        }
+                        else
+                        {
+                            DataBaseConnection(GetTable());
+                        }
                     }
                 }
                 else
@@ -422,7 +464,7 @@ namespace Guitar_Companion
                 }
                 else
                 {
-                    DataBaseConnection("SELECT * FROM songs");
+                    DataBaseConnection(GetTable());
                 }
             }
         }
