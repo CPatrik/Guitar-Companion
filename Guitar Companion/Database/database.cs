@@ -23,7 +23,7 @@ namespace Database
         {
             if (!checkIfExist("songs"))
             {
-                sqlCommand = "CREATE TABLE songs(name varchar(70), tuning varchar(12), learning bool, learned bool, favorite bool,primary key(name))";
+                sqlCommand = "CREATE TABLE songs(name varchar(70), tuning varchar(12), learning bool, learned bool, favorite bool, primary key(name))";
                 executeQuery(sqlCommand);
             }
         }
@@ -43,12 +43,12 @@ namespace Database
                 SQLiteCommand triggerCommand = dbConnection.CreateCommand();
                 triggerCommand.CommandText = sqlCommand;
                 triggerCommand.ExecuteNonQuery();
-            }
+        }
             catch (Exception)
             {
                 MessageBox.Show("Tab with the same name is already added!", "", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-        }
+}
 
         public bool checkIfTableContainsData(string tableName)
         {

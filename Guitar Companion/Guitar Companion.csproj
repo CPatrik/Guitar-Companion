@@ -6,6 +6,7 @@
     <RootNamespace>Guitar_Companion</RootNamespace>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>Data\guitar.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,6 +17,10 @@
     <None Remove="Fonts\Montserrat-Black.ttf" />
     <None Remove="Fonts\Montserrat-Light.ttf" />
     <None Remove="Fonts\Montserrat-Regular.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Data\guitar.ico" />
   </ItemGroup>
 
   <ItemGroup>

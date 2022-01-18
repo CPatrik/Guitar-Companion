@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Windows;
@@ -13,19 +14,23 @@ namespace Guitar_Companion.Windows
     {
         private Microsoft.Win32.OpenFileDialog fileDialog = new Microsoft.Win32.OpenFileDialog();
         private int index = 0;
+        List<string> songs = new List<string>();
 
         public addSongsWindow()
         {
             InitializeComponent();
 
-            fileDialog.DefaultExt = ".pdf";
-            fileDialog.Filter = "PDF Files (*.pdf)|*.pdf|PNG Files (*.png)|*.png|JPG Files (*.jpg)|*.jpg|JPEG Files (*.jpeg)|*.jpeg|GP5 Files (*.gp5)|*.gp5|GPX Files (*.gpx)|*.gpx";
+            fileDialog.Filter = "All Files|*.*|PDF Files|*.pdf|Image Files|*.png,*.jpg|Guitar Pro Files|*.gp*";
             fileDialog.Multiselect = true;
 
             Nullable<bool> result = fileDialog.ShowDialog();
 
             if (result == true)
             {
+                foreach (string name in fileDialog.FileNames)
+                {
+                    songs.Add(name);
+                }
                 FillNextSong();
             }
             else
@@ -34,27 +39,35 @@ namespace Guitar_Companion.Windows
             }
         }
 
+        public addSongsWindow(List<string> songs)
+        {
+            InitializeComponent();
+
+            this.songs = songs;
+            FillNextSong();
+        }
+
         private void addButton_Click(object sender, RoutedEventArgs e)
         {
-            string path = System.IO.Path.Combine("Tabs", System.IO.Path.GetFileName(fileDialog.FileNames[index]));
+            string path = Path.Combine("Tabs", System.IO.Path.GetFileName(songs[index]));
             if (originalFilesCheckBox.IsChecked == true)
             {
                 if (!File.Exists(path))
                 {
-                    File.Copy(fileDialog.FileNames[index], path);
+                    File.Copy(songs[index], path);
                 }
             }
             else
             {
                 if (!File.Exists(path))
                 {
-                    File.Move(fileDialog.FileNames[index], path);
+                    File.Move(songs[index], path);
                 }
             }
             Database.DbCreator db = new Database.DbCreator();
             db.createDbConnection();
 
-            string fileName = System.IO.Path.GetFileName(fileDialog.FileNames[index]);
+            string fileName = System.IO.Path.GetFileName(songs[index]);
             string tuning = "";
 
             if (tuningComboBox.SelectedIndex == 0)
@@ -90,9 +103,9 @@ namespace Guitar_Companion.Windows
 
         private void FillNextSong()
         {
-            if (index < fileDialog.FileNames.Length)
+            if (index < songs.Count)
             {
-                songNameTextBlock.Text = fileDialog.FileNames[index];
+                songNameTextBlock.Text = songs[index];
             }
             else
             {
@@ -127,7 +140,7 @@ namespace Guitar_Companion.Windows
             {
                 new Process
                 {
-                    StartInfo = new ProcessStartInfo(fileDialog.FileNames[index])
+                    StartInfo = new ProcessStartInfo(songs[index])
                     {
                         UseShellExecute = true
                     }

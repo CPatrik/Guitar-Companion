@@ -21,13 +21,10 @@ namespace Guitar_Companion
         {
             InitializeComponent();
             //Create database
-            if (!File.Exists("songs.sqlite"))
-            {
-                SQLiteConnection.CreateFile("songs.sqlite");
                 Database.DbCreator db = new Database.DbCreator();
                 db.createDbConnection();
                 db.createTable();
-            }
+
             if (!Directory.Exists("Tabs"))
             {
                 Directory.CreateDirectory("Tabs");
@@ -91,16 +88,62 @@ namespace Guitar_Companion
                 Console.WriteLine("Error with checkboxes: " + e.Message);
             }
 
+            try
+            {
+                if (extensionComboBox.SelectedIndex == 0)
+                {
+
+                }
+                else
+                {
+                    if (extensionComboBox.SelectedIndex == 1)
+                    {
+                        command += $" AND name like \'%.pdf\'";
+                    }
+                    else if (extensionComboBox.SelectedIndex == 2)
+                    {
+                        command += $" AND name like \'%.gp_\'";
+                    }
+                    else if (extensionComboBox.SelectedIndex == 3)
+                    {
+                        command += $" AND (name like \'%.png\' OR name like \'%.jpg\')";
+                    }
+                    else
+                    {
+                        command += $" AND name like \'%.txt%\'";
+                    }
+                }         
+            }
+            catch (Exception e)
+            {
+
+                Console.WriteLine("Error with extensions: " + e.Message);
+            }
+
             return command;
+        }
+
+        private string GetTable(string search)
+        {
+            return $"{GetTable()} AND name like \'%{search}%\'";
         }
 
         private void addTabsButton_Click(object sender, RoutedEventArgs e)
         {
             //Open addTabs window
-            Windows.addSongsWindow addSongsWindow = new Windows.addSongsWindow();
-            this.Show();
-            addSongsWindow.Show();
-            this.Show();
+            try
+            {
+                Windows.addSongsWindow addSongsWindow = new Windows.addSongsWindow();
+                this.Show();
+                addSongsWindow.Show();
+                this.Show();
+            }
+            catch (Exception)
+            {
+
+                Console.WriteLine("Error with addtabswindow!");
+            }
+
         }
 
         public void DataBaseConnection(string query)
@@ -226,7 +269,7 @@ namespace Guitar_Companion
         {
             if (searchTextBox.Text != "")
             {
-                DataBaseConnection($"{GetTable()} AND name like \'%{searchTextBox.Text}%\'");
+                DataBaseConnection(GetTable(searchTextBox.Text));
             }
         }
 
@@ -264,7 +307,7 @@ namespace Guitar_Companion
                         DataBaseConnection($"update songs set favorite=false where name=\"{name}\"");
                         if (searchTextBox.Text != "")
                         {
-                            DataBaseConnection($"{GetTable()} AND name like \'%{searchTextBox.Text}%\'");
+                            DataBaseConnection(GetTable(searchTextBox.Text));
                         }
                         else
                         {
@@ -276,7 +319,7 @@ namespace Guitar_Companion
                         DataBaseConnection($"update songs set favorite=true where name=\"{name}\"");
                         if (searchTextBox.Text != "")
                         {
-                            DataBaseConnection($"{GetTable()} AND name like \'%{searchTextBox.Text}%\'");
+                            DataBaseConnection(GetTable(searchTextBox.Text));
                         }
                         else
                         {
@@ -311,7 +354,7 @@ namespace Guitar_Companion
                         DataBaseConnection($"update songs set learning=false where name=\"{name}\"");
                         if (searchTextBox.Text != "")
                         {
-                            DataBaseConnection($"{GetTable()} AND name like \'%{searchTextBox.Text}%\'");
+                            DataBaseConnection(GetTable(searchTextBox.Text));
                         }
                         else
                         {
@@ -323,7 +366,7 @@ namespace Guitar_Companion
                         DataBaseConnection($"update songs set learning=true where name=\"{name}\"");
                         if (searchTextBox.Text != "")
                         {
-                            DataBaseConnection($"{GetTable()} AND name like \'%{searchTextBox.Text}%\'");
+                            DataBaseConnection(GetTable(searchTextBox.Text));
                         }
                         else
                         {
@@ -358,7 +401,7 @@ namespace Guitar_Companion
                         DataBaseConnection($"update songs set learned=false where name=\"{name}\"");
                         if (searchTextBox.Text != "")
                         {
-                            DataBaseConnection($"{GetTable()} AND name like \'%{searchTextBox.Text}%\'");
+                            DataBaseConnection(GetTable(searchTextBox.Text));
                         }
                         else
                         {
@@ -370,7 +413,7 @@ namespace Guitar_Companion
                         DataBaseConnection($"update songs set learned=true where name=\"{name}\"");
                         if (searchTextBox.Text != "")
                         {
-                            DataBaseConnection($"{GetTable()} AND name like \'%{searchTextBox.Text}%\'");
+                            DataBaseConnection(GetTable(searchTextBox.Text));
                         }
                         else
                         {
@@ -460,13 +503,47 @@ namespace Guitar_Companion
             {
                 if (searchTextBox.Text != "")
                 {
-                    DataBaseConnection($"{GetTable()} AND name like \'%{searchTextBox.Text}%\'");
+                    DataBaseConnection(GetTable(searchTextBox.Text));
                 }
                 else
                 {
                     DataBaseConnection(GetTable());
                 }
             }
+        }
+
+        private void extensionComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            DataBaseConnection(GetTable());
+        }
+
+        private void tabsDataGrid_Drop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                string[] songs = (string[])e.Data.GetData(DataFormats.FileDrop);
+                List<string> songList = new List<string>();
+                foreach (var song in songs)
+                {
+                    songList.Add(song);
+                }
+
+                try
+                {
+                    Windows.addSongsWindow addSongsWindow = new Windows.addSongsWindow(songList);
+                    this.Show();
+                    addSongsWindow.Show();
+                    this.Show();
+                }
+                catch (Exception)
+                {
+
+                    Console.WriteLine("Error with addtabswindow!");
+                }
+
+            }
+
+
         }
     }
 }
